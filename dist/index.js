@@ -48,4 +48,3 @@ app.listen(KEYS.PORT, async () => {
         console.log(error);
     }
 });
-//# sourceMappingURL=index.js.map

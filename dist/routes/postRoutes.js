@@ -8,4 +8,3 @@ router
     .put(updatePostById)
     .delete(deletePostById);
 export default router;
-//# sourceMappingURL=postRoutes.js.map

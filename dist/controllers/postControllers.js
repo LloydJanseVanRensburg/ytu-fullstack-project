@@ -111,4 +111,3 @@ export async function deletePostById(req, res) {
         console.log(error);
     }
 }
-//# sourceMappingURL=postControllers.js.map

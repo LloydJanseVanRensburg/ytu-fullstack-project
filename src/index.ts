@@ -2,6 +2,8 @@ import cors from 'cors';
 import express from 'express';
 import fs from 'fs';
 import morgan from 'morgan';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { client } from './config/database.js';
 import { KEYS } from './config/keys.js';
 import postRoutes from './routes/postRoutes.js';
@@ -29,23 +31,27 @@ app.use('/posts', postRoutes);
 app.listen(KEYS.PORT, async () => {
     console.log(`Server running on PORT ${KEYS.PORT}`);
     try {
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
         await client.connect();
 
         // Create table
         const createTableQuery = fs
-            .readFileSync('./sql/createTableQuery.sql')
+            .readFileSync(path.join(__dirname, '/sql/createTableQuery.sql'))
             .toString();
         await client.query(createTableQuery);
 
         // Delete all post
         const deleteAllPostsQuery = fs
-            .readFileSync('./sql/deleteAllPostsQuery.sql')
+            .readFileSync(path.join(__dirname, '/sql/deleteAllPostsQuery.sql'))
             .toString();
         await client.query(deleteAllPostsQuery);
 
         // Insert dummy posts
         const createDummyPostsQuery = fs
-            .readFileSync('./sql/createDummyPostsQuery.sql')
+            .readFileSync(
+                path.join(__dirname, '/sql/createDummyPostsQuery.sql')
+            )
             .toString();
         await client.query(createDummyPostsQuery);
 
